@@ -26,7 +26,7 @@ export default {
   box-sizing: border-box;
 }
 .container {
-  max-width: 600px;
+  max-width: 600 px;
   margin: 0 auto;
 }
 #app {
