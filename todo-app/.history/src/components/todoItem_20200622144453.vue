@@ -12,12 +12,10 @@
          @keyup.enter="doneEdit" @keyup.esc="cancelEdit"
           v-focus >
         </div>
-        <div>
-            <button @click="pluralize"> Plural </button>
-            <span class="remove-item" @click="removeTodo(index)">
-                &times;
-             </span>
-          </div>
+        <div class="remove-item" @click="removeTodo(index)">
+          &times;
+        </div>
+
     </div>
 </template>
 
@@ -50,13 +48,6 @@ export default {
             'beforeEditCache':'',
 
         }
-    },
-    created(){
-        eventBus.$on('pluralize', this.handlePluralize)
-    },
-    beforeDestroy(){
-        eventBus.$off('pluralize', this.handlePluralize)
-
     },
     watch: {
         checkAll(){
@@ -106,21 +97,6 @@ export default {
             this.title = this.beforeEditCache
             this.editing = false
         },
-        pluralize() {
-            /*bu kisim pluralize islemi icin daha sonra kaldirilacak*/
-            eventBus.$emit('pluralize')
-        },
-        handlePluralize() {
-
-            /*bu kisim pluralize islemi icin daha sonra kaldirilacak*/
-            this.title = this.title + 's'
-            eventBus.$emit('finishedEdit', {
-            'id': this.id,
-            'title': this.title,
-            'completed': this.completed,
-            'editing': this.editing,
-      })
-    }
     }
 }
 </script>

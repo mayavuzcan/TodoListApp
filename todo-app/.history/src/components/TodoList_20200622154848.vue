@@ -81,13 +81,6 @@ export default {
     eventBus.$on('filterChanged', (filter) => this.filter = filter)
     eventBus.$on('clearCompletedTodos', () => this.clearCompleted())
   },
-   beforeDestroy() {
-    eventBus.$off('removedTodo')
-    eventBus.$off('finishedEdit')
-    eventBus.$off('checkAllChanged')
-    eventBus.$off('filterChanged')
-    eventBus.$off('clearCompletedTodos')
-  },
   computed:{
     remaining(){
       return this.todos.filter(todo => !todo.completed).length

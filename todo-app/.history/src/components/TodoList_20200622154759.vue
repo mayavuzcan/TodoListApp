@@ -21,9 +21,7 @@
 
       <div>
         <transition name="fade">
-       <todo-clear-completed 
-       :showClearCompletedButton="showClearCompletedButton">
-       </todo-clear-completed>
+       <todo-clear-completed :showClearCompletedButton="showClearCompletedButton"></todo-clear-completed>
        </transition>
       </div>
       
@@ -36,7 +34,7 @@ import TodoItem from './TodoItem'
 import TodoItemsRemaining from './TodoItemsRemaining'
 import TodoCheckAll from './TodoCheckAll'
 import TodoFiltered from './TodoFiltered'
-import TodoClearCompleted from './TodoClearCompleted'
+import TodoClearCompleated from './TodoFiltered'
 
 export default {
   name: 'todo-list',
@@ -45,7 +43,6 @@ export default {
     TodoItemsRemaining,
     TodoCheckAll,
     TodoFiltered,
-    TodoClearCompleted,
   },
   data () {
     return {
@@ -80,13 +77,6 @@ export default {
     eventBus.$on('checkAllChanged', (checked) => this.checkAllTodos(checked))
     eventBus.$on('filterChanged', (filter) => this.filter = filter)
     eventBus.$on('clearCompletedTodos', () => this.clearCompleted())
-  },
-   beforeDestroy() {
-    eventBus.$off('removedTodo')
-    eventBus.$off('finishedEdit')
-    eventBus.$off('checkAllChanged')
-    eventBus.$off('filterChanged')
-    eventBus.$off('clearCompletedTodos')
   },
   computed:{
     remaining(){

@@ -21,9 +21,7 @@
 
       <div>
         <transition name="fade">
-       <todo-clear-completed 
-       :showClearCompletedButton="showClearCompletedButton">
-       </todo-clear-completed>
+       <todo-clear-completed :showClearCompletedButton="showClearCompletedButton"></todo-clear-completed>
        </transition>
       </div>
       
@@ -80,13 +78,6 @@ export default {
     eventBus.$on('checkAllChanged', (checked) => this.checkAllTodos(checked))
     eventBus.$on('filterChanged', (filter) => this.filter = filter)
     eventBus.$on('clearCompletedTodos', () => this.clearCompleted())
-  },
-   beforeDestroy() {
-    eventBus.$off('removedTodo')
-    eventBus.$off('finishedEdit')
-    eventBus.$off('checkAllChanged')
-    eventBus.$off('filterChanged')
-    eventBus.$off('clearCompletedTodos')
   },
   computed:{
     remaining(){
