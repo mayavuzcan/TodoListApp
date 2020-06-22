@@ -5,9 +5,7 @@
        <transition-group name="fade" enter-active-class="animated 
        fadeInUp" leave-active-class="animated fadeOutDown">
       <todo-item v-for="(todo, index) in todosFiltered" 
-      :key="todo.id" :todo = "todo" :index = "index" 
-      :checkAll="!anyRemaining" @removeTodo = "removeTodo"
-       @finishedEdit = "finishedEdit">
+      :key="todo.id" :todo = "todo" :index = "index">
         
       </todo-item >
        </transition-group>
@@ -92,7 +90,13 @@ export default {
       return this.todos.filter(todo => todo.completed).length > 0
     }
   },
-   
+   directives: {
+    focus: {
+      inserted: function (el) {
+        el.focus()
+      }
+    }
+  },
   methods: { /* Bu method ile @keyup.enter ile yakalanan islem burada gerceklestirilir */
     addTodo(){
 
@@ -110,7 +114,18 @@ export default {
       this.newTodo = ''
       this.idForTodo++
     },
-    
+    editTodo(todo){/*Duzenleme methodu */
+      this.beforeEditCache = todo.title
+      todo.editing = true
+    },
+    doneEdit(todo){//Duzenlemeyi tamamlama methodu
+
+       if(todo.title.trim().length == '' ){
+         //Bu kisim title tamamen silinip tekrar enter a basilirsa eski hale getiriyor
+        todo.title = this.beforeEditCache
+      }
+      todo.editing = false
+    },
     removeTodo(index){//Silme methodu
       this.todos.splice(index, 1)
     },
@@ -118,13 +133,13 @@ export default {
       this.todos.forEach((todo) => todo.completed = 
       event.target.checked)
     },
+    cancelEdit(todo) {//Esc tusuna basarak duzenlemeden cikma methodu
+      todo.title = this.beforeEditCache
+      todo.editing = false
+    },
     clearCompleted(){
       this.todos = this.todos.filter(todo => !todo.completed)
-    },
-    finishedEdit(data){
-      this.todos.splice(data.index,1,data.todo)
     }
-
   }
 }
 </script>
